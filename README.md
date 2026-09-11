@@ -1,7 +1,9 @@
 # Atelier Plomberie-Électricité — concept de site vitrine
 
 > **Projet de démonstration.** Concept de style pour un artisan plombier-électricien.
-> Aucune entreprise réelle, aucun coordonnée valide, aucun formulaire connecté.
+> Aucune entreprise réelle, aucune coordonnée valide, aucun formulaire connecté.
+
+**Démo en ligne : https://yboukamir.github.io/atelier-plomberie-electricite/**
 
 Vite + React + TypeScript + Tailwind CSS v4 + shadcn/ui.
 
@@ -11,6 +13,16 @@ Vite + React + TypeScript + Tailwind CSS v4 + shadcn/ui.
 npm install
 npm run dev
 ```
+
+## Déploiement
+
+Chaque push sur `main` déclenche [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) :
+`npm ci`, puis `npm run build` (typecheck inclus), puis publication sur GitHub Pages.
+Le workflow peut aussi être relancé à la main depuis l'onglet Actions.
+
+Le site est servi sous `/<nom-du-depot>/` : le workflow passe ce chemin à Vite via
+la variable `BASE_PATH` (voir [`vite.config.ts`](vite.config.ts)). En local, sans
+variable, la base reste `/`.
 
 ## Palette
 
