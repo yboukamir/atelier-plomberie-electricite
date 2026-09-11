@@ -6,7 +6,7 @@ export type Theme = "light" | "dark" | "system"
 export const THEME_STORAGE_KEY = "atelier-theme"
 
 export type ThemeContextValue = {
-  /** Préférence choisie, "system" par défaut. */
+  /** Préférence choisie, "dark" par défaut (direction « urgence »). */
   theme: Theme
   /** Thème réellement appliqué, une fois "system" résolu. */
   resolvedTheme: "light" | "dark"

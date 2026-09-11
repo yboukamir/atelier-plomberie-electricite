@@ -18,7 +18,7 @@ function readStoredTheme(): Theme {
   } catch {
     // localStorage indisponible (navigation privée, cookies bloqués)
   }
-  return "system"
+  return "dark"
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {

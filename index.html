@@ -10,6 +10,7 @@
       content="Concept de site vitrine pour un artisan plombier-électricien. Projet de démonstration, aucune entreprise réelle."
     />
     <meta name="robots" content="noindex" />
+    <link rel="preconnect" href="https://images.unsplash.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -23,9 +24,11 @@
       // La clé est partagée avec src/lib/theme-context.ts.
       try {
         var stored = localStorage.getItem("atelier-theme");
+        // Sombre par défaut (direction « urgence ») ; "system" suit l'OS.
         var dark =
+          !stored ||
           stored === "dark" ||
-          ((!stored || stored === "system") &&
+          (stored === "system" &&
             window.matchMedia("(prefers-color-scheme: dark)").matches);
         if (dark) {
           document.documentElement.classList.add("dark");

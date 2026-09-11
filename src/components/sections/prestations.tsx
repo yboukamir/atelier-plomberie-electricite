@@ -1,92 +1,60 @@
-import { Droplets, Gauge, ShowerHead } from "lucide-react"
-import { motion, useReducedMotion } from "motion/react"
+import { FeatureGrid, type Feature } from "@/components/ui/feature-grid"
+import { unsplash } from "@/lib/contact"
 
-import { FeatureCard } from "@/components/ui/grid-feature-cards"
-
-const prestations = [
+// Photos Unsplash : Timur Shakerzianov, Emmanuel Ikwuegbu, Marian Florinel Condruz
+const prestations: Feature[] = [
   {
     title: "Dépannage fuite & canalisation",
-    icon: Droplets,
     description:
-      "Recherche de fuite, débouchage et réparation de canalisation. Intervention sous 24h.",
-    delai: "Sous 24h",
+      "Recherche de fuite, débouchage, réparation ou remplacement de canalisation. On limite les dégâts d'abord, on répare ensuite.",
+    badge: "Sous 24h",
+    imageSrc: unsplash("photo-1676210133055-eab6ef033ce3", 900),
+    imageAlt: "Plombier intervenant sur des canalisations sous un évier",
+    href: "#devis",
+    ctaLabel: "Signaler une fuite",
   },
   {
     title: "Mise aux normes électriques",
-    icon: Gauge,
     description:
-      "Tableau électrique, mise à la terre, remise en conformité NF C 15-100. Devis sous 48h.",
-    delai: "Devis sous 48h",
+      "Tableau, disjoncteurs différentiels, mise à la terre : remise en conformité NF C 15-100, avec un devis détaillé poste par poste.",
+    badge: "Devis sous 48h",
+    imageSrc: unsplash("photo-1621905251189-08b45d6a269e", 900),
+    imageAlt: "Électricien casqué travaillant sur un tableau électrique",
+    href: "#devis",
+    ctaLabel: "Demander un devis",
   },
   {
     title: "Chauffe-eau & sanitaires",
-    icon: ShowerHead,
     description:
-      "Remplacement de chauffe-eau, pose de sanitaires et robinetterie. Sur planning.",
-    delai: "Sur planning",
+      "Remplacement de chauffe-eau, pose de WC, lavabo et robinetterie. L'ancien matériel est repris et évacué.",
+    badge: "Sur planning",
+    imageSrc: unsplash("photo-1620653713380-7a34b773fef8", 900),
+    imageAlt: "Clé jaune serrant le raccord d'un chauffe-eau",
+    href: "#devis",
+    ctaLabel: "Planifier une pose",
   },
 ]
 
-type ViewAnimationProps = {
-  delay?: number
-  className?: React.ComponentProps<typeof motion.div>["className"]
-  children: React.ReactNode
-}
-
-function AnimatedContainer({
-  className,
-  delay = 0.1,
-  children,
-}: ViewAnimationProps) {
-  const shouldReduceMotion = useReducedMotion()
-
-  if (shouldReduceMotion) {
-    return <div className={className}>{children}</div>
-  }
-
-  return (
-    <motion.div
-      initial={{ filter: "blur(4px)", translateY: -8, opacity: 0 }}
-      whileInView={{ filter: "blur(0px)", translateY: 0, opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ delay, duration: 0.8 }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  )
-}
-
 export function Prestations() {
   return (
-    <section id="prestations" className="scroll-mt-24 py-16 md:py-28">
-      <div className="mx-auto w-full max-w-5xl space-y-8 px-4">
-        <AnimatedContainer className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-            Prestations
+    <section id="prestations" className="scroll-mt-24 py-20 md:py-28">
+      <div className="mx-auto max-w-6xl px-4">
+        <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold tracking-[0.2em] text-highlight uppercase">
+              Prestations
+            </p>
+            <h2 className="mt-3 text-4xl font-bold tracking-tight uppercase md:text-5xl lg:text-6xl">
+              Ce qu'on répare, ce qu'on installe
+            </h2>
+          </div>
+          <p className="max-w-sm text-muted-foreground">
+            Plomberie et électricité par le même artisan : un seul interlocuteur,
+            un seul déplacement.
           </p>
-          <h2 className="mt-3 text-3xl font-bold uppercase tracking-wide text-balance md:text-4xl lg:text-5xl">
-            Ce qu'on répare, ce qu'on installe
-          </h2>
-          <p className="mt-4 text-sm text-muted-foreground text-balance md:text-base">
-            Plomberie et électricité par le même artisan : un seul
-            interlocuteur, un seul déplacement.
-          </p>
-        </AnimatedContainer>
+        </div>
 
-        <AnimatedContainer
-          delay={0.4}
-          className="grid grid-cols-1 divide-x divide-y divide-dashed border border-dashed sm:grid-cols-2 md:grid-cols-3"
-        >
-          {prestations.map((prestation) => (
-            <div key={prestation.title} className="relative">
-              <span className="absolute right-4 top-4 z-20 rounded-full border border-accent/40 bg-accent/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-foreground">
-                {prestation.delai}
-              </span>
-              <FeatureCard feature={prestation} className="h-full" />
-            </div>
-          ))}
-        </AnimatedContainer>
+        <FeatureGrid features={prestations} />
       </div>
     </section>
   )

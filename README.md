@@ -1,11 +1,11 @@
 # Atelier Plomberie-Électricité — concept de site vitrine
 
 > **Projet de démonstration.** Concept de style pour un artisan plombier-électricien.
-> Aucune entreprise réelle, aucune coordonnée valide, aucun formulaire connecté.
+> Aucune entreprise réelle : coordonnées, avis et formulaires sont fictifs.
 
 **Démo en ligne : https://yboukamir.github.io/atelier-plomberie-electricite/**
 
-Vite + React + TypeScript + Tailwind CSS v4 + shadcn/ui.
+Vite + React + TypeScript + Tailwind CSS v4 + shadcn/ui + motion.
 
 ## Lancer
 
@@ -13,6 +13,82 @@ Vite + React + TypeScript + Tailwind CSS v4 + shadcn/ui.
 npm install
 npm run dev
 ```
+
+## Direction : « urgence »
+
+Un site d'artisan dépanneur doit faire appeler. Tout est donc orienté vers le
+numéro d'urgence et le devis :
+
+- bandeau d'urgence refermable, numéro dans le header, bouton d'appel fixe en bas
+  d'écran sur mobile ;
+- vraies photos d'intervention en plein écran ;
+- preuves de confiance : chiffre vedette (24h), note moyenne, mur d'avis,
+  garantie décennale ;
+- étapes d'intervention, zone et délais, FAQ, puis un dernier appel à l'action.
+
+### Palette
+
+Sombre par défaut, avec un thème clair accessible via le bouton soleil/lune.
+
+| Rôle | Sombre | Clair | Usage |
+| --- | --- | --- | --- |
+| `background` | pétrole presque noir `#071215` | `#f6f4ef` | fond |
+| `primary` | ambre électrique `#ffb21f` | `#f5a300` | boutons, pastilles (texte foncé dessus) |
+| `highlight` | `#ffc247` | `#9a5800` | ambre utilisable en texte (surtitres, icônes) |
+| `accent` | cuivre `#e07a3f` | `#b5541f` | appoint |
+
+Tokens dans [`src/index.css`](src/index.css), exposés à Tailwind via `@theme inline`.
+Typographie : Barlow Condensed (titres, capitales) + Inter (texte).
+
+### Thème clair / sombre
+
+- Sombre au premier chargement ; le choix explicite est mémorisé dans
+  `localStorage` (clé `atelier-theme`).
+- Un script inline dans [`index.html`](index.html) applique la classe `dark` avant
+  le premier rendu : pas de flash. Il partage la clé avec
+  [`src/lib/theme-context.ts`](src/lib/theme-context.ts) — changer l'une, c'est
+  changer l'autre.
+
+## Sections et composants 21st.dev
+
+Chaque section part d'un composant 21st.dev, choisi sur aperçu parmi plusieurs
+candidats, puis adapté (textes en français, palette, `motion/react` au lieu de
+`framer-motion`, `<a>` au lieu de `next/link`, utilitaires manquants réécrits).
+
+| Section | Fichier | Composant d'origine |
+| --- | --- | --- |
+| Bandeau d'urgence | [`sections/site-header.tsx`](src/components/sections/site-header.tsx) | `shadcndesign/banner-1` |
+| Hero | [`sections/hero.tsx`](src/components/sections/hero.tsx) | `ravikatiyar162/hero-section-4` |
+| Note ★ du hero | [`ui/rating-badge.tsx`](src/components/ui/rating-badge.tsx) | `prebuiltui/testimonial` (démo avatars) |
+| Chiffres clés | [`sections/chiffres.tsx`](src/components/sections/chiffres.tsx) | `uilayout.contact/stats-bold` |
+| Prestations | [`sections/prestations.tsx`](src/components/sections/prestations.tsx) | `lavikatiyar/feature-grid` |
+| Intervention | [`sections/etapes.tsx`](src/components/sections/etapes.tsx) | `ravikatiyar162/how-it-works` |
+| Zone | [`sections/zone-intervention.tsx`](src/components/sections/zone-intervention.tsx) | `Mazyar kawa/location-map` |
+| Avis | [`sections/avis.tsx`](src/components/sections/avis.tsx) | `efferd/testimonials-section` |
+| Appel final | [`sections/appel-final.tsx`](src/components/sections/appel-final.tsx) | `ziegfiroyt/cta69` |
+| FAQ | [`sections/faq.tsx`](src/components/sections/faq.tsx) | `shadcnblockscom/faq3` |
+| Devis | [`sections/devis.tsx`](src/components/sections/devis.tsx) | `efferd/contact-card` |
+| Footer | [`sections/site-footer.tsx`](src/components/sections/site-footer.tsx) | `solaceui/footer-section-3` |
+
+Le header (logo, navigation, numéro) est sur mesure.
+
+Les avis sont illustrés par des **initiales**, pas par des photos : ils sont
+fictifs, on ne leur prête pas de vrais visages.
+
+## Photos
+
+Toutes sous [licence Unsplash](https://unsplash.com/license) (gratuite, usage
+commercial autorisé, crédit non obligatoire mais donné ici). Les photos
+Unsplash+ (payantes) ont été écartées. Elles sont servies par le CDN d'Unsplash
+(`images.unsplash.com`), rien n'est stocké dans le dépôt.
+
+| Usage | Photo | Auteur |
+| --- | --- | --- |
+| Hero | [Plombier au chalumeau](https://unsplash.com/photos/NfG4rXmceFM) | Battlecreek Coffee Roasters |
+| Chiffres clés | [Eau jaillissant d'un tuyau](https://unsplash.com/photos/91LGCVN5SAI) | Daan Mooij |
+| Dépannage fuite | [Canalisations sous évier](https://unsplash.com/photos/wzIjLL4KB-4) | Timur Shakerzianov |
+| Mise aux normes | [Électricien au tableau](https://unsplash.com/photos/_2AlIm-F6pw) | Emmanuel Ikwuegbu |
+| Chauffe-eau | [Raccord de chauffe-eau](https://unsplash.com/photos/C-oYJoIfgCs) | Marian Florinel Condruz |
 
 ## Déploiement
 
@@ -24,57 +100,8 @@ Le site est servi sous `/<nom-du-depot>/` : le workflow passe ce chemin à Vite 
 la variable `BASE_PATH` (voir [`vite.config.ts`](vite.config.ts)). En local, sans
 variable, la base reste `/`.
 
-## Palette
-
-Volontairement à l'écart du bleu SaaS : univers technique/artisanal.
-
-| Rôle | Couleur | Usage |
-| --- | --- | --- |
-| `primary` | cuivre `#a44a1e` | actions, icônes de prestation |
-| `secondary` | pétrole `#0f2b33` | bandeau démo, footer, fond sombre |
-| `accent` | ambre électrique `#d98b06` | urgence, badges, rayures d'atelier |
-| `background` | crème béton `#f7f3ec` | fond clair |
-
-Les tokens sont définis dans [`src/index.css`](src/index.css) (`:root` + `.dark`,
-exposés à Tailwind via `@theme inline`).
-
-### Thème clair / sombre
-
-Bouton soleil/lune dans le header (visible aussi en mobile, à côté du burger).
-
-- Au premier chargement, le site suit la préférence système (`prefers-color-scheme`).
-- Le choix explicite est mémorisé dans `localStorage` sous la clé `atelier-theme`.
-- Tant que le thème est sur `system`, un changement côté OS est répercuté à chaud.
-- Un script inline dans [`index.html`](index.html) applique la classe `dark` avant
-  le premier rendu : pas de flash blanc au chargement. Il partage la clé de
-  stockage avec [`src/lib/theme-context.ts`](src/lib/theme-context.ts) — si vous
-  changez l'une, changez l'autre.
-
-État réparti entre [`theme-context.ts`](src/lib/theme-context.ts) (contexte + hook),
-[`theme-provider.tsx`](src/components/theme-provider.tsx) (logique) et
-[`theme-toggle.tsx`](src/components/ui/theme-toggle.tsx) (bouton).
-
-Typographie : Barlow Condensed (titres, capitales) + Inter (texte).
-
-## Sections
-
-| Section | Fichier | Composant 21st.dev |
-| --- | --- | --- |
-| Header + bandeau démo | [`sections/site-header.tsx`](src/components/sections/site-header.tsx) | — (sur mesure) |
-| Hero | [`sections/hero.tsx`](src/components/sections/hero.tsx) | `ravikatiyar162/hero-section-9` |
-| Prestations | [`sections/prestations.tsx`](src/components/sections/prestations.tsx) | `efferd/grid-feature-cards` |
-| Zone d'intervention | [`sections/zone-intervention.tsx`](src/components/sections/zone-intervention.tsx) | `Mazyar kawa/location-map` |
-| Devis | [`sections/devis.tsx`](src/components/sections/devis.tsx) | `meschacirung/contact-form` |
-| Footer | [`ui/footer-04.tsx`](src/components/ui/footer-04.tsx) | `shadcnui-blocks/footer-04` |
-
-Les composants récupérés via le MCP 21st ont été adaptés : traduction, palette
-du projet, `framer-motion` → `motion/react`, `next/link` → `<a>`, et pour le
-hero les trois images distantes sont remplacées par des tuiles React (le projet
-ne dépend d'aucun asset externe).
-
 ## Limites assumées
 
 - Le formulaire de devis n'envoie rien : il affiche un message de démonstration.
-- Le champ « se faire rappeler » du footer est inerte lui aussi.
-- Numéro, e-mail et coordonnées sont des valeurs de remplissage.
+- Numéro, e-mail et avis sont des valeurs de remplissage.
 - `<meta name="robots" content="noindex">` est posé pour éviter tout référencement.

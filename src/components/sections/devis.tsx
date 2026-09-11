@@ -1,8 +1,8 @@
 import { useState } from "react"
-import { Info, Send } from "lucide-react"
+import { Clock, Info, Mail, MapPin, Phone, Send } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
+import { ContactCard } from "@/components/ui/contact-card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
+import { EMAIL_DISPLAY, PHONE_DISPLAY, PHONE_HREF } from "@/lib/contact"
 
 const typesIntervention = [
   { value: "fuite", label: "Fuite / canalisation" },
@@ -25,36 +26,32 @@ export function Devis() {
   const [envoye, setEnvoye] = useState(false)
 
   return (
-    <section id="devis" className="scroll-mt-24 py-16 md:py-28">
-      <div className="mx-auto max-w-3xl px-4">
-        <div className="text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-            Devis gratuit
-          </p>
-          <h2 className="mt-3 text-3xl font-bold uppercase tracking-wide md:text-4xl lg:text-5xl">
-            Décrivez le problème
-          </h2>
-          <p className="mt-4 text-sm text-muted-foreground md:text-base">
-            On rappelle dans la journée pour cadrer l'intervention et donner un
-            prix. Aucun engagement.
-          </p>
-        </div>
-
-        <Card className="mx-auto mt-12 max-w-lg p-8 shadow-md sm:p-12">
+    <section id="devis" className="scroll-mt-24 px-4 py-20 md:py-28">
+      <div className="mx-auto max-w-6xl">
+        <ContactCard
+          title="Demandez votre devis"
+          description="Pour les travaux programmés, décrivez votre besoin : on vous rappelle dans la journée avec un prix. Pour une urgence, appelez plutôt, c'est plus rapide."
+          contactInfo={[
+            { icon: Phone, label: "Urgence 24h/24", value: PHONE_DISPLAY, href: PHONE_HREF },
+            { icon: Mail, label: "E-mail", value: EMAIL_DISPLAY },
+            { icon: Clock, label: "Horaires", value: "Bureau 8h–18h · astreinte 7j/7" },
+            { icon: MapPin, label: "Zone", value: "40 km autour de l'atelier" },
+          ]}
+        >
           <form
-            className="space-y-6"
+            className="w-full space-y-4"
             onSubmit={(e) => {
               // Formulaire de démonstration : rien n'est envoyé.
               e.preventDefault()
               setEnvoye(true)
             }}
           >
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label htmlFor="nom">Nom</Label>
               <Input id="nom" name="nom" type="text" autoComplete="name" required />
             </div>
 
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label htmlFor="telephone">Téléphone</Label>
               <Input
                 id="telephone"
@@ -66,7 +63,7 @@ export function Devis() {
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label htmlFor="type">Type d'intervention</Label>
               <Select name="type">
                 <SelectTrigger id="type">
@@ -82,7 +79,7 @@ export function Devis() {
               </Select>
             </div>
 
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <Label htmlFor="message">Message</Label>
               <Textarea
                 id="message"
@@ -92,14 +89,14 @@ export function Devis() {
               />
             </div>
 
-            <Button type="submit" className="w-full" size="lg">
+            <Button type="submit" className="w-full font-semibold" size="lg">
               <Send className="size-4" />
               Envoyer la demande
             </Button>
 
             {envoye && (
               <p
-                className="rounded-md border border-accent/40 bg-accent/10 px-3 py-2.5 text-sm text-foreground"
+                className="rounded-md border border-primary/40 bg-primary/10 px-3 py-2.5 text-sm text-foreground"
                 role="status"
               >
                 Formulaire de démonstration : la demande n'est pas transmise.
@@ -112,7 +109,7 @@ export function Devis() {
               de prise de contact.
             </p>
           </form>
-        </Card>
+        </ContactCard>
       </div>
     </section>
   )

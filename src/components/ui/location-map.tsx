@@ -8,19 +8,28 @@ import {
   useTransform,
 } from "motion/react"
 
+type Size = { width: number; height: number }
+
 interface LocationMapProps {
   location?: string
   coordinates?: string
   className?: string
+  /** Carte dépliée dès l'affichage */
+  defaultExpanded?: boolean
+  collapsedSize?: Size
+  expandedSize?: Size
 }
 
 export function LocationMap({
   location = "Atelier — secteur central",
   coordinates = "45.7640° N, 4.8357° E",
   className,
+  defaultExpanded = false,
+  collapsedSize = { width: 260, height: 150 },
+  expandedSize = { width: 340, height: 280 },
 }: LocationMapProps) {
   const [isHovered, setIsHovered] = useState(false)
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded)
   const containerRef = useRef<HTMLDivElement>(null)
 
   const mouseX = useMotionValue(0)
@@ -68,10 +77,8 @@ export function LocationMap({
           rotateY: springRotateY,
           transformStyle: "preserve-3d",
         }}
-        animate={{
-          width: isExpanded ? 340 : 260,
-          height: isExpanded ? 280 : 150,
-        }}
+        initial={false}
+        animate={isExpanded ? expandedSize : collapsedSize}
         transition={{ type: "spring", stiffness: 400, damping: 35 }}
       >
         <div className="from-muted/20 to-muted/40 absolute inset-0 bg-gradient-to-br via-transparent" />

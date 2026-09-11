@@ -4,76 +4,81 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
-  Palette "atelier" — volontairement à l'écart du bleu SaaS générique.
-  Pétrole (bleu-vert profond) pour le fond sombre et le texte,
-  cuivre pour la couleur d'action (tuyauterie), ambre électrique pour l'urgence.
+  Direction « urgence » : fond pétrole presque noir, ambre électrique pour tout
+  ce qui déclenche une action (appeler, demander un devis), cuivre en appoint.
+  Le sombre est le thème par défaut ; le clair reste accessible via le bouton.
+
+  --primary   : remplissage ambre (boutons, pastilles) — texte foncé dessus
+  --highlight : ambre utilisable en texte (surtitres, icônes), contrasté sur le fond
+  --accent    : cuivre
 */
 :root {
-  --background: #f7f3ec;
-  --foreground: #14262c;
+  --background: #f6f4ef;
+  --foreground: #0c1a1e;
 
-  --card: #fffdfa;
-  --card-foreground: #14262c;
+  --card: #ffffff;
+  --card-foreground: #0c1a1e;
 
-  --popover: #fffdfa;
-  --popover-foreground: #14262c;
+  --popover: #ffffff;
+  --popover-foreground: #0c1a1e;
 
-  /* Cuivre */
-  --primary: #a44a1e;
-  --primary-foreground: #fff6ee;
+  --primary: #f5a300;
+  --primary-foreground: #150f00;
 
-  /* Pétrole */
-  --secondary: #0f2b33;
-  --secondary-foreground: #eef4f3;
+  --secondary: #0c1a1e;
+  --secondary-foreground: #f3f1ec;
 
-  --muted: #ece5da;
-  --muted-foreground: #5d6d72;
+  --muted: #ebe7df;
+  --muted-foreground: #56666b;
 
-  /* Ambre électrique */
-  --accent: #d98b06;
-  --accent-foreground: #1a1206;
+  --accent: #b5541f;
+  --accent-foreground: #ffffff;
 
-  --destructive: #b3261e;
-  --destructive-foreground: #fff6ee;
+  --highlight: #9a5800;
 
-  --border: #ddd3c4;
-  --input: #ddd3c4;
-  --ring: #a44a1e;
+  --destructive: #d92d20;
+  --destructive-foreground: #ffffff;
 
-  --radius: 0.5rem;
+  --border: #ddd6ca;
+  --input: #d3cbbd;
+  --ring: #f5a300;
+
+  --radius: 0.75rem;
 
   --font-display: "Barlow Condensed", "Oswald", "Arial Narrow", system-ui, sans-serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 .dark {
-  --background: #0b1f25;
-  --foreground: #eef4f3;
+  --background: #071215;
+  --foreground: #f3f1ec;
 
-  --card: #102A32;
-  --card-foreground: #eef4f3;
+  --card: #0d1c20;
+  --card-foreground: #f3f1ec;
 
-  --popover: #102A32;
-  --popover-foreground: #eef4f3;
+  --popover: #0d1c20;
+  --popover-foreground: #f3f1ec;
 
-  --primary: #d2703a;
-  --primary-foreground: #180a03;
+  --primary: #ffb21f;
+  --primary-foreground: #150f00;
 
-  --secondary: #163a44;
-  --secondary-foreground: #eef4f3;
+  --secondary: #102429;
+  --secondary-foreground: #f3f1ec;
 
-  --muted: #143038;
-  --muted-foreground: #9bb0b5;
+  --muted: #11242a;
+  --muted-foreground: #9fb2b6;
 
-  --accent: #f0a92b;
-  --accent-foreground: #1a1206;
+  --accent: #e07a3f;
+  --accent-foreground: #150a03;
 
-  --destructive: #e0574d;
-  --destructive-foreground: #180a03;
+  --highlight: #ffc247;
 
-  --border: #22454f;
-  --input: #22454f;
-  --ring: #d2703a;
+  --destructive: #f04438;
+  --destructive-foreground: #ffffff;
+
+  --border: #1d3339;
+  --input: #24404a;
+  --ring: #ffb21f;
 }
 
 @theme inline {
@@ -91,6 +96,7 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-highlight: var(--highlight);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
@@ -105,9 +111,37 @@
   --radius-sm: calc(var(--radius) - 4px);
 }
 
+@theme {
+  /* Défilement horizontal infini : deux copies identiques glissées de 50 %. */
+  --animate-marquee: marquee 40s linear infinite;
+  /* Défilement vertical du mur d'avis. */
+  --animate-marquee-up: marquee-up 45s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes marquee-up {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-50%);
+    }
+  }
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
   }
   body {
     background-color: var(--color-background);
@@ -121,11 +155,17 @@
   }
 }
 
-/* Rayure d'atelier : réutilisée sur les bandeaux et séparateurs */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Rayure de chantier : bandeau démo et séparateurs. */
 @utility hazard-stripes {
   background-image: repeating-linear-gradient(
     -45deg,
-    var(--color-accent) 0 10px,
+    var(--color-primary) 0 10px,
     transparent 10px 20px
   );
 }

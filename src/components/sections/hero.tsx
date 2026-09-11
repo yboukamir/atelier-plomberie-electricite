@@ -1,116 +1,61 @@
-import { Clock, ShieldCheck, Receipt, Droplets, Zap, Wrench } from "lucide-react"
+import { Phone } from "lucide-react"
 
-import HeroSection from "@/components/ui/hero-section-9"
+import { HeroSection } from "@/components/ui/hero-section-4"
+import { RatingBadge } from "@/components/ui/rating-badge"
+import { PHONE_DISPLAY, PHONE_HREF, unsplash } from "@/lib/contact"
 
-/** Tuile du collage : pas d'asset distant, on dessine l'univers technique. */
-function Tile({
-  icon,
-  title,
-  caption,
-  tone,
-}: {
-  icon: React.ReactNode
-  title: string
-  caption: string
-  tone: "copper" | "petrol" | "amber"
-}) {
-  const tones = {
-    copper: "from-primary/25 via-primary/10 to-transparent text-primary",
-    petrol:
-      "from-secondary/25 via-secondary/10 to-transparent text-secondary dark:text-secondary-foreground",
-    amber: "from-accent/30 via-accent/10 to-transparent text-accent",
-  } as const
-
-  // Contenu aligné en haut : les tuiles se recouvrent par le bas dans le collage.
-  return (
-    <div
-      className={`flex h-full w-full flex-col gap-3 rounded-xl bg-gradient-to-br p-4 ${tones[tone]}`}
-    >
-      <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-background/70 shadow-sm">
-        {icon}
-      </div>
-      <div>
-        <p className="font-display text-base font-bold uppercase leading-tight text-foreground">
-          {title}
-        </p>
-        <p className="mt-0.5 text-[11px] leading-snug text-muted-foreground">
-          {caption}
-        </p>
-      </div>
-    </div>
-  )
-}
+// Plombier au chalumeau, lampe frontale — Battlecreek Coffee Roasters / Unsplash
+const HERO_PHOTO = "photo-1558618666-fcd25c85cd64"
 
 export function Hero() {
-  const scrollTo = (id: string) => () => {
-    document.querySelector(id)?.scrollIntoView({ behavior: "smooth" })
-  }
-
   return (
-    <div id="top">
-      <HeroSection
-        title={
-          <>
-            Une fuite, une panne — <br className="hidden sm:block" />
-            on est là sous 24h.
-          </>
-        }
-        subtitle="Dépannage, installation et mise aux normes en plomberie et électricité. Devis gratuit."
-        actions={[
-          {
-            text: "Demander un devis",
-            onClick: scrollTo("#devis"),
-            variant: "default",
-          },
-          {
-            text: "Voir les prestations",
-            onClick: scrollTo("#prestations"),
-            variant: "outline",
-          },
-        ]}
-        stats={[
-          {
-            value: "24h",
-            label: "Délai d'urgence",
-            icon: <Clock className="size-5" />,
-          },
-          {
-            value: "10 ans",
-            label: "Garantie décennale",
-            icon: <ShieldCheck className="size-5" />,
-          },
-          {
-            value: "0 €",
-            label: "Devis gratuit",
-            icon: <Receipt className="size-5" />,
-          },
-        ]}
-        visuals={[
-          <Tile
-            key="1"
-            tone="copper"
-            icon={<Droplets className="size-5 text-primary" />}
-            title="Plomberie"
-            caption="Fuites, canalisations, sanitaires"
-          />,
-          <Tile
-            key="2"
-            tone="amber"
-            icon={<Zap className="size-5 text-accent" />}
-            title="Électricité"
-            caption="Tableau, mise aux normes NF C 15-100"
-          />,
-          <Tile
-            key="3"
-            tone="petrol"
-            icon={
-              <Wrench className="size-5 text-secondary dark:text-secondary-foreground" />
-            }
-            title="Dépannage"
-            caption="Astreinte 7j/7, intervention rapide"
-          />,
-        ]}
-      />
-    </div>
+    <HeroSection
+      id="top"
+      imageUrl={unsplash(HERO_PHOTO, 2000)}
+      eyebrow={
+        <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs font-semibold tracking-[0.16em] text-white uppercase backdrop-blur">
+          <span className="relative flex size-2">
+            <span className="absolute inline-flex size-full animate-ping rounded-full bg-destructive opacity-75 motion-reduce:animate-none" />
+            <span className="relative inline-flex size-2 rounded-full bg-destructive" />
+          </span>
+          Astreinte 7j/7
+          <span className="hidden sm:inline"> · plomberie &amp; électricité</span>
+        </span>
+      }
+      title={
+        <>
+          Une fuite, une panne —<br className="hidden sm:block" />{" "}
+          <span className="text-primary">on est là sous 24h.</span>
+        </>
+      }
+      subtitle="Dépannage, installation et mise aux normes en plomberie et électricité. Devis gratuit."
+      primaryButtonText="Demander un devis"
+      primaryButtonHref="#devis"
+      secondaryButtonText="Voir les prestations"
+      secondaryButtonHref="#prestations"
+      footer={
+        <div className="flex flex-col items-center gap-6 sm:flex-row sm:gap-10">
+          <a href={PHONE_HREF} className="group inline-flex items-center gap-3 text-left">
+            <span className="flex size-12 items-center justify-center rounded-full bg-primary text-primary-foreground transition group-hover:scale-105">
+              <Phone className="size-5" />
+            </span>
+            <span>
+              <span className="block text-xs tracking-widest text-white/70 uppercase">
+                Urgence, 24h/24
+              </span>
+              <span className="font-display text-3xl font-bold text-white">
+                {PHONE_DISPLAY}
+              </span>
+            </span>
+          </a>
+          <RatingBadge
+            initials={["CM", "KB", "SL", "TR"]}
+            rating="4,9"
+            caption="Note moyenne · avis fictifs de démo"
+            className="text-white"
+          />
+        </div>
+      }
+    />
   )
 }
