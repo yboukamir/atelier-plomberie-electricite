@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/atelier.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atelier Plomberie-Électricité — concept (démo)</title>
+    <meta
+      name="description"
+      content="Concept de site vitrine pour un artisan plombier-électricien. Projet de démonstration, aucune entreprise réelle."
+    />
+    <meta name="robots" content="noindex" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <script>
+      // Applique le thème avant le premier rendu : évite le flash clair.
+      // La clé est partagée avec src/lib/theme-context.ts.
+      try {
+        var stored = localStorage.getItem("atelier-theme");
+        var dark =
+          stored === "dark" ||
+          ((!stored || stored === "system") &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        if (dark) {
+          document.documentElement.classList.add("dark");
+          document.documentElement.style.colorScheme = "dark";
+        }
+      } catch (e) {}
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
