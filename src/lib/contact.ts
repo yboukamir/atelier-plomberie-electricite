@@ -6,3 +6,7 @@ export const EMAIL_DISPLAY = "contact@atelier.invalid"
 /** Photo Unsplash (licence gratuite) servie par leur CDN, recadrée à la largeur voulue. */
 export const unsplash = (photo: string, width: number) =>
   `https://images.unsplash.com/${photo}?auto=format&fit=crop&w=${width}&q=75`
+
+/** srcset : le navigateur choisit la largeur adaptée à l'écran et à sa densité. */
+export const unsplashSrcSet = (photo: string, widths: number[]) =>
+  widths.map((width) => `${unsplash(photo, width)} ${width}w`).join(", ")

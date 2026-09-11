@@ -110,7 +110,7 @@ export function TestimonialsSection({
                     {job} · {place}
                   </span>
                 </figcaption>
-                <div className="mt-2 flex gap-0.5" aria-label={`${rating} étoiles sur 5`}>
+                <div className="mt-2 flex gap-0.5" role="img" aria-label={`${rating} étoiles sur 5`}>
                   {Array.from({ length: 5 }).map((_, star) => (
                     <Star
                       key={star}

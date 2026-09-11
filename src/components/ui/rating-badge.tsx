@@ -44,7 +44,7 @@ export function RatingBadge({
         ))}
       </div>
       <div className="pl-3">
-        <div className="flex items-center gap-0.5" aria-label={`Note ${rating} sur 5`}>
+        <div className="flex items-center gap-0.5" role="img" aria-label={`Note ${rating} sur 5`}>
           {Array.from({ length: 5 }).map((_, index) => (
             <Star key={index} className="size-4 fill-primary text-primary" aria-hidden />
           ))}

@@ -5,6 +5,12 @@
 
 **Démo en ligne : https://yboukamir.github.io/atelier-plomberie-electricite/**
 
+![Haut de page sur ordinateur](docs/apercu-desktop.png)
+
+<p align="center">
+  <img src="docs/apercu-mobile.png" alt="Haut de page sur mobile" width="280" />
+</p>
+
 Vite + React + TypeScript + Tailwind CSS v4 + shadcn/ui + motion.
 
 ## Lancer
@@ -38,7 +44,8 @@ Sombre par défaut, avec un thème clair accessible via le bouton soleil/lune.
 | `accent` | cuivre `#e07a3f` | `#b5541f` | appoint |
 
 Tokens dans [`src/index.css`](src/index.css), exposés à Tailwind via `@theme inline`.
-Typographie : Barlow Condensed (titres, capitales) + Inter (texte).
+Typographie : Barlow Condensed (titres, capitales) + Inter (texte), auto-hébergées
+via [Fontsource](https://fontsource.org/) en sous-ensemble latin (accents compris).
 
 ### Thème clair / sombre
 
@@ -48,6 +55,7 @@ Typographie : Barlow Condensed (titres, capitales) + Inter (texte).
   le premier rendu : pas de flash. Il partage la clé avec
   [`src/lib/theme-context.ts`](src/lib/theme-context.ts) — changer l'une, c'est
   changer l'autre.
+- Les deux thèmes passent un audit de contraste WCAG AA sur l'ensemble des textes.
 
 ## Sections et composants 21st.dev
 
@@ -74,6 +82,30 @@ Le header (logo, navigation, numéro) est sur mesure.
 
 Les avis sont illustrés par des **initiales**, pas par des photos : ils sont
 fictifs, on ne leur prête pas de vrais visages.
+
+## Performance et accessibilité
+
+Audit Lighthouse, puis corrections :
+
+- **Polices auto-hébergées** : plus de requête bloquante vers Google Fonts.
+- **Photos responsives** : `srcset` + `sizes` sur toutes les images ; le navigateur
+  télécharge la largeur utile (960 px pour le hero sur mobile, pas 2000).
+- **Photo du hero** en `<img fetchpriority="high">`, préchargée dans
+  [`index.html`](index.html) avec le même `srcset` — les largeurs doivent rester
+  identiques à celles de [`sections/hero.tsx`](src/components/sections/hero.tsx).
+- **Accessibilité** : notes en étoiles exposées avec `role="img"`, niveaux de
+  titres sans saut, liens tous nommés.
+
+Le score SEO reste volontairement bas : la page porte `noindex` (voir plus bas).
+
+## Aperçu de partage
+
+Balises Open Graph dans [`index.html`](index.html), image
+[`public/og-image.png`](public/og-image.png) (1200 × 630). Les URL y sont
+absolues : à mettre à jour si le dépôt change de nom.
+
+Les captures (aperçu de partage et README) sont faites avec puppeteer-core en
+émulant « animations réduites », pour figer les composants dans leur état final.
 
 ## Photos
 
@@ -104,4 +136,5 @@ variable, la base reste `/`.
 
 - Le formulaire de devis n'envoie rien : il affiche un message de démonstration.
 - Numéro, e-mail et avis sont des valeurs de remplissage.
-- `<meta name="robots" content="noindex">` est posé pour éviter tout référencement.
+- `<meta name="robots" content="noindex">` est posé pour que la démo ne soit pas
+  prise pour une vraie entreprise dans les moteurs de recherche.

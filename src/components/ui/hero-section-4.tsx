@@ -13,6 +13,8 @@ interface HeroSectionProps
   secondaryButtonText: string
   secondaryButtonHref: string
   imageUrl: string
+  /** Variantes de la photo de fond, choisies par le navigateur selon l'écran */
+  imageSrcSet?: string
   /** Pastille au-dessus du titre */
   eyebrow?: React.ReactNode
   /** Bloc sous les boutons (numéro d'urgence, note) */
@@ -45,6 +47,8 @@ const itemVariants: Variants = {
 /**
  * Adapté de ravikatiyar162/hero-section-4 (21st.dev).
  * - framer-motion → motion/react ; pas d'animation si prefers-reduced-motion.
+ * - Photo en <img> (srcset, fetchpriority) plutôt qu'en background CSS : le
+ *   navigateur choisit la taille adaptée et peut la précharger (voir index.html).
  * - Voile en dégradé plus dense : le bg-black/20 d'origine ne suffit pas à
  *   rendre un titre lisible sur une photo de chantier chargée.
  * - Texte en blanc : text-primary-foreground est foncé dans cette palette.
@@ -63,6 +67,7 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
       secondaryButtonText,
       secondaryButtonHref,
       imageUrl,
+      imageSrcSet,
       eyebrow,
       footer,
       ...props
@@ -81,11 +86,14 @@ const HeroSection = React.forwardRef<HTMLElement, HeroSectionProps>(
         )}
         {...props}
       >
-        {/* Photo de fond */}
-        <div
-          className="absolute inset-0 -z-10 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${imageUrl})` }}
-          aria-hidden="true"
+        {/* Photo de fond (décorative) */}
+        <img
+          src={imageUrl}
+          srcSet={imageSrcSet}
+          sizes="100vw"
+          alt=""
+          fetchPriority="high"
+          className="absolute inset-0 -z-10 h-full w-full object-cover"
         />
 
         {/* Voile de lisibilité */}

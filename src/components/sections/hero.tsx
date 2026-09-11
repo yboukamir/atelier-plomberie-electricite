@@ -2,16 +2,19 @@ import { Phone } from "lucide-react"
 
 import { HeroSection } from "@/components/ui/hero-section-4"
 import { RatingBadge } from "@/components/ui/rating-badge"
-import { PHONE_DISPLAY, PHONE_HREF, unsplash } from "@/lib/contact"
+import { PHONE_DISPLAY, PHONE_HREF, unsplash, unsplashSrcSet } from "@/lib/contact"
 
-// Plombier au chalumeau, lampe frontale — Battlecreek Coffee Roasters / Unsplash
+// Plombier au chalumeau, lampe frontale — Battlecreek Coffee Roasters / Unsplash.
+// Largeurs à garder identiques au <link rel="preload"> de index.html.
 const HERO_PHOTO = "photo-1558618666-fcd25c85cd64"
+const HERO_WIDTHS = [640, 960, 1280, 1920]
 
 export function Hero() {
   return (
     <HeroSection
       id="top"
-      imageUrl={unsplash(HERO_PHOTO, 2000)}
+      imageUrl={unsplash(HERO_PHOTO, 1920)}
+      imageSrcSet={unsplashSrcSet(HERO_PHOTO, HERO_WIDTHS)}
       eyebrow={
         <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs font-semibold tracking-[0.16em] text-white uppercase backdrop-blur">
           <span className="relative flex size-2">

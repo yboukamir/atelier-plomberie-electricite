@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils"
 
 export interface Feature {
   imageSrc: string
+  /** Variantes de la photo, choisies par le navigateur selon la largeur de carte */
+  imageSrcSet?: string
   imageAlt: string
   title: string
   description: string
@@ -39,6 +41,9 @@ const FeatureCard: React.FC<{ feature: Feature }> = ({ feature }) => (
     <div className="relative aspect-[4/3] overflow-hidden">
       <img
         src={feature.imageSrc}
+        srcSet={feature.imageSrcSet}
+        // Une colonne sur mobile, deux en tablette, trois (~360 px) sur grand écran
+        sizes="(min-width: 1024px) 360px, (min-width: 768px) 50vw, 100vw"
         alt={feature.imageAlt}
         loading="lazy"
         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"

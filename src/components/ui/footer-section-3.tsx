@@ -60,6 +60,7 @@ export default function Footer3({
         {/* Bandeau texturé */}
         <motion.a
           href={titleHref}
+          aria-label={title}
           className="relative block h-[140px] w-full overflow-hidden rounded-xl bg-primary focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:outline-none md:h-[300px]"
           variants={itemVariants}
         >
@@ -112,9 +113,9 @@ export default function Footer3({
           >
             {columns.map((column) => (
               <div key={column.title} className="flex flex-col space-y-4">
-                <h4 className="font-display text-lg font-bold uppercase">
+                <h3 className="font-display text-lg font-bold uppercase">
                   {column.title}
-                </h4>
+                </h3>
                 <ul className="flex flex-col space-y-2 text-muted-foreground">
                   {column.links.map((link) => (
                     <li key={link.label}>

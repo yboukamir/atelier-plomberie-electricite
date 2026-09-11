@@ -4,19 +4,50 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/atelier.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#071215" />
     <title>Atelier Plomberie-Électricité — concept (démo)</title>
     <meta
       name="description"
       content="Concept de site vitrine pour un artisan plombier-électricien. Projet de démonstration, aucune entreprise réelle."
     />
+    <!-- Démo : ne pas apparaître dans les moteurs de recherche comme une vraie entreprise. -->
     <meta name="robots" content="noindex" />
-    <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap"
-      rel="stylesheet"
+
+    <!--
+      Aperçu de partage (LinkedIn, messageries…). Les URL doivent être absolues :
+      à mettre à jour si le dépôt change de nom.
+    -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Atelier Plomberie-Électricité (démo)" />
+    <meta property="og:title" content="Atelier Plomberie-Électricité — concept de site vitrine" />
+    <meta
+      property="og:description"
+      content="Site vitrine fictif pour un artisan dépanneur, direction « urgence ». React, Tailwind CSS, shadcn/ui. Projet de démonstration."
     />
+    <meta property="og:url" content="https://yboukamir.github.io/atelier-plomberie-electricite/" />
+    <meta property="og:image" content="https://yboukamir.github.io/atelier-plomberie-electricite/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Haut de page du site : photo d'un plombier et le titre « Une fuite, une panne — on est là sous 24h »"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!--
+      Photo du hero, préchargée en priorité avec le même srcset que l'<img> du hero
+      (src/components/sections/hero.tsx) pour que le navigateur la réutilise.
+    -->
+    <link
+      rel="preload"
+      as="image"
+      fetchpriority="high"
+      href="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&amp;fit=crop&amp;w=1920&amp;q=75"
+      imagesrcset="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&amp;fit=crop&amp;w=640&amp;q=75 640w, https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&amp;fit=crop&amp;w=960&amp;q=75 960w, https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&amp;fit=crop&amp;w=1280&amp;q=75 1280w, https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&amp;fit=crop&amp;w=1920&amp;q=75 1920w"
+      imagesizes="100vw"
+    />
+    <link rel="preconnect" href="https://images.unsplash.com" />
   </head>
   <body>
     <script>
